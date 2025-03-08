@@ -104,7 +104,7 @@ class PostController extends Controller
             $validated = $request->validate([
                 'user_id' => 'required|exists:users,id',
                 'content' => 'required|string|max:500',
-                'images.*' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+                'images.*' => 'nullable|image|max:7000',
             ]);
             //
             $post = Post::create([

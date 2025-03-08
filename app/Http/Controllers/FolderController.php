@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Folder;
 use Illuminate\Http\Request;
 use App\Models\User;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class FolderController extends Controller
 {
@@ -120,4 +120,19 @@ class FolderController extends Controller
             return response()->json(['message' => 'Something went wrong', 'error' => $e->getMessage()], 500);
         }
     }
+
+    public function generatePdf($id)
+{
+    try {
+        $folder = Folder::with('reports')->findOrFail($id);
+        $pdf = Pdf::loadView('folder-pdf', compact('folder'));
+        return $pdf->download("folder-{$id}.pdf");
+    } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+        return response()->json(['message' => 'Folder not found'], 404);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'Something went wrong', 'error' => $e->getMessage()], 500);
+    }
+}
+
+
 }

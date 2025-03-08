@@ -13,6 +13,8 @@ Route::put('/forgetpassword', [UserController::class, 'forgetpassword']);
 Route::post('/otp', [UserController::class, 'otp']);
 // User resource routes
 Route::get('/users', [UserController::class, 'index']);
+Route::post('/users/image/{id}', [UserController::class, 'UpdateUserFunction']);
+Route::put('/users/security/{id}', [UserController::class, 'UpdatePassword']);
 Route::get('/users/{id}', [UserController::class, 'show']);
 Route::put('/users/{id}', [UserController::class, 'updateuser']);
 
@@ -34,6 +36,7 @@ Route::post('/posts/{post}/save', [PostController::class, 'save']);
 
 //folder routes
 Route::prefix('folders')->group(function () {
+    Route::get('/pdf/{id}', [FolderController::class, 'generatePdf']);
     Route::get('{id}', [FolderController::class, 'index']);
     Route::get('show/{id}', [FolderController::class, 'show']);
     Route::post('/', [FolderController::class, 'store']);

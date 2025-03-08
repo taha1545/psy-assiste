@@ -174,5 +174,62 @@ class UserController extends Controller
             return response()->json(['message' => 'Internal Server Error'], 500);
         }
     }
-    
+
+    public function UpdateUserFunction(Request $request, $id)
+    {
+        try {
+            // Find user
+            $user = User::findOrFail($id);
+            // Validation
+            $data = $request->validate([
+                'profile_p' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            ]);
+            // need to fix this
+            if ($request->hasFile('profile_p')) {
+                $path = $request->file('profile_p')->store('profile_pictures', 'public');
+                $data['profile_p'] = $path;
+            }
+            // Update user
+            $user->update($data);
+            //
+            return response()->json([
+                'message' => 'User updated successfully',
+                'user' => $user
+            ]);
+            //
+        } catch (ValidationException $e) {
+            return response()->json(['message' => 'Validation failed', 'errors' => $e->errors()], 422);
+        } catch (Exception) {
+            return response()->json(['message' => 'Internal Server Error'], 500);
+        }
+    }
+
+    public function UpdatePassword(Request $request, $id)
+    {
+        try {
+            // Find user
+            $user = User::findOrFail($id);
+            // Validate input
+            $data = $request->validate([
+                'password' => 'required|string',
+                'new_password' => 'required|string|min:6',
+            ]);
+            // Check if old password matches the current one
+            if (!Hash::check($data['password'], $user->password)) {
+                return response()->json(['message' => 'Old password is incorrect'], 403);
+            }
+            // Update the password
+            $user->update([
+                'password' => Hash::make($data['new_password']),
+            ]);
+            //
+            return response()->json([
+                'message' => 'Password updated successfully',
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json(['message' => 'Validation failed', 'errors' => $e->errors()], 422);
+        } catch (Exception) {
+            return response()->json(['message' => 'Internal Server Error'], 500);
+        }
+    }
 }
