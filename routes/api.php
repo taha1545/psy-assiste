@@ -6,6 +6,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\FolderController;
 use App\Http\Controllers\ReportController;
 
+Route::get('/',[FolderController::class,'test']);
+
 // user auth routes
 Route::post('/login', [UserController::class, 'Login']);
 Route::post('/signup', [UserController::class, 'Signup']);

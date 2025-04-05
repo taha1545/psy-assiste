@@ -122,17 +122,43 @@ class FolderController extends Controller
     }
 
     public function generatePdf($id)
-{
-    try {
-        $folder = Folder::with('reports')->findOrFail($id);
-        $pdf = Pdf::loadView('folder-pdf', compact('folder'));
-        return $pdf->download("folder-{$id}.pdf");
-    } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
-        return response()->json(['message' => 'Folder not found'], 404);
-    } catch (\Exception $e) {
-        return response()->json(['message' => 'Something went wrong', 'error' => $e->getMessage()], 500);
+    {
+        try {
+            $folder = Folder::with(['reports', 'user'])->findOrFail($id);
+
+            $module = request()->query('module', 1);
+
+            $allowedModules = [1, 2, 3];
+            if (!in_array($module, $allowedModules)) {
+                return response()->json([
+                    'message' => 'Invalid module parameter',
+                    'allowed_modules' => $allowedModules
+                ], 422);
+            }
+
+            $view = "folder{$module}-pdf";
+
+            $pdf = Pdf::loadView($view, compact('folder'))
+                ->setPaper('a4')
+                ->setOption('font', 'DejaVu Sans')
+                ->setOption('isRemoteEnabled', true)
+                ->setOption('isHtml5ParserEnabled', true)
+                ->setOption('defaultFont', 'DejaVu Sans');
+
+            return $pdf->download("folder-{$id}-module-{$module}.pdf");
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json(['message' => 'Folder not found'], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Something went wrong',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
-}
 
-
+    public function test()
+    {
+        $folder = Folder::with(['reports', 'user'])->findOrFail(1);
+        return view('folder3-pdf', compact('folder'));
+    }
 }
