@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: laravel-api
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: APP_KEY
+        generateValue: true
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        value: YOUR_POSTGRES_HOST
+      - key: DB_PORT
+        value: 5432
+      - key: DB_DATABASE
+        value: YOUR_DB_NAME
+      - key: DB_USERNAME
+        value: YOUR_DB_USER
+      - key: DB_PASSWORD
+        value: YOUR_DB_PASSWORD
