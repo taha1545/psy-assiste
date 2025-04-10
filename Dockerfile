@@ -30,8 +30,13 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
 
+# Run storage:link before start
+RUN php artisan storage:link
+
 # Expose port
 EXPOSE 8000
 
 # Start Laravel
-CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000
+CMD php artisan migrate:fresh --force && \
+    php artisan queue:work --tries=3 --timeout=90 & \
+    php artisan serve --host=0.0.0.0 --port=8000

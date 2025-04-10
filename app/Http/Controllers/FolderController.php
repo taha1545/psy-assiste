@@ -146,6 +146,8 @@ class FolderController extends Controller
                 ->setOption('defaultFont', 'DejaVu Sans');
 
             return $pdf->download("folder-{$id}-module-{$module}.pdf");
+
+            
         } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return response()->json(['message' => 'Folder not found'], 404);
         } catch (\Exception $e) {

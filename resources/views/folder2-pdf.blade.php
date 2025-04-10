@@ -26,7 +26,7 @@
 
         .header-section {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 35px;
         }
 
         .official-titles h1,
@@ -131,14 +131,14 @@
 <body>
     <div class="document-page">
 
-        <div class="header-section">
+         <div class="header-section">
             <div class="official-titles">
-                <h1>الشعبية الديمقراطية الجزائرية الجمهورية</h1>
+                <img src={{asset('arab.png')}}>
                 <h2>REPUBLIQUE ALGERIENNE DEMOCRATIQUE ET POPULAIRE </h2>
             </div>
             <div class="institution-info">
-                <h4> اسم المؤسسة</h4>
-                <h5>..............................................................................</h5>
+                <h4>Nom de l'institution</h4>
+                <h5>..............................................................................</h4>
             </div>
         </div>
         <div class="patient-info-section">
@@ -151,8 +151,8 @@
             <h2 class="request-title">CERTIFICAT DE BONNE SANTE MENTALE</h2>
 
             <p class="request-paragraph">Je soussigné, certifie avoir reçu et examiné ce jour le nommé :</p>
-            <p><span class="input-field">........................................................................................................</span></p>
-            <p>né(e) le : <span class="input-field">............................</span> à : <span class="input-field">.............................................</span></p>
+            <p><span class="input-field">.{{ $folder->folder_name }}</span></p>
+            <p>né(e) le : <span class="input-field">.......{{  $folder->birth_date  ?? 'N/A' }}......</span> à : <span class="input-field">.......{{  $folder->full_address ?? 'N/A' }}...........</span></p>
             <p>et déclare qu’il(elle) ne présente aucun trouble mental symptomatique d'une affection mentale caractérisée et avérée, ni aucun signe de souffrance mentale cliniquement évolutive, ce jour.</p>
             <p>Par conséquent, sa condition mentale lui permet de réaliser tous les actes de la vie civile.</p>
             <p>Dont certificat délivré à la demande de l'intéressé pour servir et valoir ce que de droit.</p>

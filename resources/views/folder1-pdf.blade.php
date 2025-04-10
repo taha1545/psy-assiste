@@ -1,19 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>psyco</title>
     <style>
-        <style>* {
+        * {
             box-sizing: border-box;
         }
 
         body {
             margin: 0;
             padding: 0;
-            font-family: DejaVu Sans, Arial, sans-serif;
+            font-family: 'Amiri', 'Noto Sans Arabic', DejaVu Sans, Arial, sans-serif;
             background-color: white;
             font-size: 14px;
             line-height: 1.6;
@@ -26,7 +27,7 @@
 
         .header-section {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
         }
 
         .official-titles h1,
@@ -44,7 +45,7 @@
         .patient-info-section {
             display: table;
             width: 100%;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             padding: 10px;
         }
 
@@ -84,7 +85,7 @@
         }
 
         .request-content {
-            margin-top: 30px;
+            margin-top: 15px;
         }
 
         .request-title {
@@ -125,9 +126,17 @@
         .signature-line {
             font-style: italic;
         }
+
+        .arabic-text {
+            direction: rtl;
+            text-align: right;
+            /* or center */
+            font-family: "Arial", "Amiri", sans-serif;
+            /* optional: for better Arabic fonts */
+        }
     </style>
 
-    </style>
+
 </head>
 
 <body>
@@ -135,11 +144,11 @@
 
         <div class="header-section">
             <div class="official-titles">
-                <h1>الشعبية الديمقراطية الجزائرية الجمهورية</h1>
+                <img src={{asset('arab.png')}}>
                 <h2>REPUBLIQUE ALGERIENNE DEMOCRATIQUE ET POPULAIRE </h2>
             </div>
             <div class="institution-info">
-                <h4> اسم المؤسسة</h4>
+                <h4>Nom de l'institution</h4>
                 <h5>..............................................................................</h4>
             </div>
         </div>
