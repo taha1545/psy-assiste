@@ -37,6 +37,6 @@ RUN php artisan storage:link
 EXPOSE 8000
 
 # Start Laravel
-CMD php artisan migrate:fresh --force && \
+CMD php artisan migrate  && \
     php artisan queue:work --tries=3 --timeout=90 & \
     php artisan serve --host=0.0.0.0 --port=8000
